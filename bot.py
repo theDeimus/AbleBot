@@ -46,13 +46,15 @@ def isCommand(bot, update):
 
 
 def error(bot, update, error):
-    logger.warn('Update "%s" caused error "%s"' % (update, error))
+    logger.warning('Update "%s" caused error "%s"' % (update, error))
 
 def main():
     # Create the EventHandler and pass it your bot's token.
     TOKEN = os.environ['TELEGRAM_TOKEN']
     PORT = int(os.environ.get('PORT', '5000'))
     updater = Updater(TOKEN)
+
+    BOT = os.environ['HEROKU_APP_NAME']
 
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
@@ -67,7 +69,7 @@ def main():
     updater.start_webhook(listen="0.0.0.0",
                       port=PORT,
                       url_path=TOKEN)
-    updater.bot.set_webhook("https://ablebot.herokuapp.com/" + TOKEN)
+    updater.bot.set_webhook("https://{}.herokuapp.com/".format(BOT) + TOKEN)
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT. This should be used most of the time, since
     # start_polling() is non-blocking and will stop the bot gracefully.
