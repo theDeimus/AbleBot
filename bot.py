@@ -38,8 +38,11 @@ def help(bot, update):
     update.message.reply_text('Help!')
 
 
-def echo(bot, update):
-    update.message.reply_text(update.message.text)
+def isCommand(bot, update):
+    if update.message.text.find('$') == 0:
+        update.message.reply_text(update.message.text)
+    else:
+        update.message.reply_text('Not a command!')
 
 
 def error(bot, update, error):
@@ -54,12 +57,8 @@ def main():
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
 
-    # on different commands - answer in Telegram
-    dp.add_handler(CommandHandler("start", start))
-    dp.add_handler(CommandHandler("help", help))
-
-    # on noncommand i.e message - echo the message on Telegram
-    dp.add_handler(MessageHandler(Filters.text, echo))
+    #  on noncommand i.e message - echo the message on Telegram
+    dp.add_handler(MessageHandler(Filters.text, isCommand))
 
     # log all errors
     dp.add_error_handler(error)
@@ -77,3 +76,9 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+'''
+    # on different commands - answer in Telegram
+    dp.add_handler(CommandHandler("start", start))
+    dp.add_handler(CommandHandler("help", help))
+'''
