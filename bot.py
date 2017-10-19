@@ -54,7 +54,7 @@ def main():
     PORT = int(os.environ.get('PORT', '5000'))
     updater = Updater(TOKEN)
 
-    BOT = os.environ['HEROKU_APP_NAME']
+    BOT = os.environ['APP_NAME']
 
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
